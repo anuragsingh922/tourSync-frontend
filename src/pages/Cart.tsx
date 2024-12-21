@@ -1,6 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { IndianRupee, LoaderCircleIcon, ShoppingCart } from "lucide-react";
+import {
+  IndianRupee,
+  LoaderCircleIcon,
+  Plus,
+  ShoppingCart,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import CartCard from "@/components/trips/CartCard";
 import { Button } from "@/components/ui/button";
@@ -12,6 +17,15 @@ import { createPayment } from "@/store/slices/paymentSlice";
 import { postbookedTrip } from "@/store/slices/bookedtripsSlice";
 import { clearCart } from "@/store/slices/cartSlice";
 import { toast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import BuyDetails from "@/components/Payment/BuyDetails";
 
 const Cart = () => {
   const {
@@ -20,7 +34,7 @@ const Cart = () => {
       cart: { loading: cartloading, error: cartError },
     },
   } = useAppSelector((state) => state.cart);
-  console.log("Cart : " , cart);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {
     payments,
     status: {
@@ -73,43 +87,31 @@ const Cart = () => {
             <div className="text-3xl font-bold">₹{totalCost.toFixed(2)}</div>
           </CardContent>
         </Card>
+
+        
         {cart && cart.length > 0 && (
           <Card className="flex flex-col items-center justify-center p-3">
             <div className="flex flex-col items-center justify-center gap-2">
-              <Button
-                onClick={() => {
-                  const paymentPayload = {
-                    amount: totalCost.toString(),
-                    description: "Book trips",
-                    currency: "INR",
-                    trips: cart,
-                  };
-                  dispatch(createPayment(paymentPayload))
-                    .unwrap()
-                    .then((payload: any) => {
 
-                      if (payload?.paymentId) {
-                        dispatch(postbookedTrip(cart))
-                          .unwrap()
-                          .then((payload) => {
-                            dispatch(clearCart());
-                            setTotalCost(0);
-                          });
-                      } else {
-                        toast({
-                          title: "Payment",
-                          description: "Payment Failed",
-                          variant: "destructive",
-                        });
-                      }
-                    });
-                }}
-              >
-                {paymentloading ? "Processing" : "Buy"}
-                {paymentloading && (
-                  <LoaderCircleIcon className="animate-spin h-12 w-12 " />
-                )}
-              </Button>
+            <div className="flex justify-between items-center">
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>Buy</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Complete Payment</DialogTitle>
+              </DialogHeader>
+              <BuyDetails
+                price={totalCost}
+                onClose={() => setIsDialogOpen(false)}
+                setTotalCost={setTotalCost}
+                cart={cart}
+                paymentloading={paymentloading}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
               <div className="flex items-center justify-center">
                 <img
                   src={VisaImage}

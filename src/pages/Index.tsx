@@ -26,6 +26,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import CancellationPolicy from "@/components/Payment/CancellationPolicy";
 
 const priceComparisonData = [
   { name: "Our Platform", price: 1000, fill: "hsl(var(--primary))" },
@@ -193,6 +194,10 @@ const Index = () => {
           </div>
           <Trips />
         </div>
+      </section>
+
+      <section>
+        <CancellationPolicy/>
       </section>
 
       {/* Features Section */}

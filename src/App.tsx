@@ -19,6 +19,7 @@ import ManageTrips from "./pages/ManageTrips";
 import EditTrip from "./components/trips/EditTrip";
 import BookedTrips from "./pages/BookedTrips";
 import Trips from "./pages/Trips";
+import TripDetails from "./pages/TripDetail";
 
 const withAuthorization = <P extends object>(Component: ComponentType<P>) => {
   return (props: P) => (
@@ -52,8 +53,9 @@ const App: React.FC = () => {
                 />
                 <Route path="/auth" element={<Auth />} />
                 <Route
-                  path="/trip/:tripID"
-                  element={withAuthorization(TripDetail)({})}
+                  // path="/trip/:tripID"
+                  path="/tripDetail"
+                  element={withAuthorization(TripDetails)({})}
                 />
                 <Route path="/trips" element={withAuthorization(Trips)({})} />
                 <Route

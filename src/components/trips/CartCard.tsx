@@ -129,54 +129,6 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
           </div>
         )}
       </CardContent>
-      <div>
-        {trip?.cancellationPolicy &&
-          trip?.cancellationPolicy.length > 0 &&
-          trip?.cancellationPolicy.map((policy, index) => {
-            return (
-              <div
-                key={index}
-                className="flex flex-wrap gap-4 sm:gap-6 justify-center items-stretch"
-              >
-                <Label className="text-center sm:text-left w-full">
-                  Cancellation Policy {index + 1}
-                </Label>
-
-                <div className="flex flex-wrap justify-evenly gap-4 sm:gap-6">
-                  {/* Loop through the object entries of the policy */}
-                  {Object.entries(policy).map(([days, refund]) => {
-                    const refundAmountt = (refund / 100) * trip?.price;
-                    if (refundAmountt !== refundAmount) {
-                      setrefundAmount(refundAmountt);
-                    }
-                    console.log("Refund Amount : ", refundAmountt);
-                    return (
-                      <div
-                        key={days}
-                        className="sm:w-1/3 p-4 max-w-full flex-grow flex-shrink"
-                      >
-                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-evenly">
-                          <div className="flex flex-col sm:w-1/2 gap-4 sm:gap-6 items-center">
-                            <Label className="block font-medium mb-2">
-                              Time {`(>=Days)`}
-                            </Label>
-                            <Input type="number" disabled value={days} />
-                          </div>
-                          <div className="flex flex-col sm:w-1/2 gap-4 sm:gap-6 items-center">
-                            <Label className="block font-medium mb-2">
-                              Refund (%)
-                            </Label>
-                            <Input type="number" disabled value={refund} />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-      </div>
 
       <div className="m-1 flex items-center justify-between px-5 mb-6">
         <div className="flex items-center gap-1 text-sm text-black-foreground font-bold">
@@ -194,7 +146,6 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
             >
               <ShoppingBag /> Cancel
             </Button>
-            <div>Refund Amount : {refundAmount}</div>
           </div>
         ) : (
           <Button
