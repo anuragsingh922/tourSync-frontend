@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { signIn, signUp } from "@/store/slices/userSlice";
@@ -20,6 +20,7 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setrole] = useState("user");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
@@ -40,9 +41,8 @@ const Auth = () => {
       });
   };
 
-
   const handlesignup = () => {
-    const userD = { name, email, password };
+    const userD = { name, email, password, role };
     dispatch(signUp(userD))
       .unwrap()
       .then(() => {
@@ -75,6 +75,11 @@ const Auth = () => {
               ? "Welcome back! Sign in to your account"
               : "Create a new account to get started"}
           </CardDescription>
+          {role === "organizer" && (
+            <CardDescription className=" text-green-600 font-bold">
+              Start as an Organizer
+            </CardDescription>
+          )}
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
@@ -136,6 +141,19 @@ const Auth = () => {
                 ? "Don't have an account? Sign Up"
                 : "Already have an account? Sign In"}
             </Button>
+            {role === "user" && (
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  setrole("organizer");
+                  setIsSignIn(!isSignIn);
+                }}
+              >
+                Start as an organizer
+              </Button>
+            )}
           </CardFooter>
         </form>
       </Card>

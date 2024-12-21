@@ -60,6 +60,7 @@ const Profile = () => {
         <CardHeader>
           <CardTitle>Profile</CardTitle>
         </CardHeader>
+
         <CardContent className="space-y-6">
           <div className="flex flex-col items-center space-y-4">
             <Avatar className="h-24 w-24">
@@ -72,13 +73,17 @@ const Profile = () => {
             </Button> */}
           </div>
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">Name</label>
-              <Input value={profile.name} disabled placeholder="Your name" />
-            </div>
+            <label className="text-sm font-medium">Name</label>
+            <Input value={profile.name} disabled placeholder="Your name" />
           </div>
+          {user.role === "organizer" && (
+            <div className="space-y-4">
+              <label className="text-sm font-medium">Role</label>
+              <Input value={user?.role} disabled placeholder="Role" />
+            </div>
+          )}
 
-          {NavigationGrid()}
+          {user.role === "user" && NavigationGrid()}
         </CardContent>
       </Card>
     </div>

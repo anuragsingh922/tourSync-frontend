@@ -179,25 +179,27 @@ const Index = () => {
       </section>
 
       {/* Available Trips Section */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 inline-block">
-              Available Trips
-            </span>
-            <h2 className="text-4xl font-bold mb-4">
-              Explore Our Destinations
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Find your perfect trip from our carefully curated selection
-            </p>
+      {user?.role === "user" && (
+        <section className="py-20 px-4 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 inline-block">
+                Available Trips
+              </span>
+              <h2 className="text-4xl font-bold mb-4">
+                Explore Our Destinations
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Find your perfect trip from our carefully curated selection
+              </p>
+            </div>
+            <Trips />
           </div>
-          <Trips />
-        </div>
-      </section>
+        </section>
+      )}
 
       <section>
-        <CancellationPolicy/>
+        <CancellationPolicy />
       </section>
 
       {/* Features Section */}

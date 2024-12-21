@@ -55,18 +55,30 @@ const Header = () => {
                 className="pl-10 w-full"
               />
             </div> */}
-            <Link
-              to="/cart"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              <ShoppingBagIcon />
-            </Link>
-            <Link
-              to="/booked-trips"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              Booked Trips
-            </Link>
+            {user?.role === "user" ? (
+              <>
+                <Link
+                  to="/cart"
+                  className="text-sm font-medium hover:text-primary transition-colors"
+                >
+                  <ShoppingBagIcon />
+                </Link>
+                <Link
+                  to="/booked-trips"
+                  className="text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Booked Trips
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/manage-trips"
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
+                Manage Trips
+              </Link>
+            )}
+
             {/* <Link
               to="/tags"
               className="text-sm font-medium hover:text-primary transition-colors"
@@ -90,9 +102,11 @@ const Header = () => {
                     <DropdownMenuItem asChild>
                       <Link to="/profile">Profile</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/cart">Cart</Link>
-                    </DropdownMenuItem>
+                    {user?.role === "user" && (
+                      <DropdownMenuItem asChild>
+                        <Link to="/cart">Cart</Link>
+                      </DropdownMenuItem>
+                    )}
                     {/* <DropdownMenuItem asChild>
                       <Link to="/stats">Stats</Link>
                     </DropdownMenuItem> */}
@@ -155,22 +169,35 @@ const Header = () => {
                 Profile
               </Link>
             </div>
-            <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Link
-                to="/cart"
-                className="text-sm font-medium hover:text-primary transition-colors"
-              >
-                Cart
-              </Link>
-            </div>
-            <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Link
-                to="/booked-trips"
-                className="text-sm font-medium hover:text-primary transition-colors"
-              >
-                Booked Trips
-              </Link>
-            </div>
+            {user?.role === "user" ? (
+              <>
+                <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  <Link
+                    to="/cart"
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    Cart
+                  </Link>
+                </div>
+                <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  <Link
+                    to="/booked-trips"
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    Booked Trips
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Link
+                  to="/manage-trips"
+                  className="text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Manage Trips
+                </Link>
+              </div>
+            )}
             {user && (
               <Button variant="default" asChild className="w-full">
                 <div
