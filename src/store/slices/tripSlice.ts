@@ -70,7 +70,7 @@ export const ftechAllTrips = createAsyncThunk("trips/fetchAll", async () => {
 });
 export const postTrip = createAsyncThunk(
   "trips/posttrip",
-  async (data: AddTripState) => {
+  async (data: any) => {
     const response = await api.post<TripState>("/trips", data);
     return response.data;
   }

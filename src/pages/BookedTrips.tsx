@@ -31,7 +31,7 @@ const BookedTrips = () => {
                 return <Skeleton />;
               }
               return (
-                <CartCard key={trip?._id} _id={trip?._id} trip={trip?.tripID} />
+                <CartCard key={trip?._id} _id={trip?._id} trip={trip} />
               );
             })}
 

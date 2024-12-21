@@ -20,6 +20,7 @@ const Cart = () => {
       cart: { loading: cartloading, error: cartError },
     },
   } = useAppSelector((state) => state.cart);
+  console.log("Cart : " , cart);
   const {
     payments,
     status: {

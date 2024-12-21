@@ -17,6 +17,8 @@ import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 interface TripCardProps {
   trip: Trip;
@@ -63,7 +65,6 @@ const formatDateTime = (dateStr: string) => {
   return `${formattedDate} at ${formattedTime}`;
 };
 
-
 const TripCard = ({ trip, user }: TripCardProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -77,7 +78,6 @@ const TripCard = ({ trip, user }: TripCardProps) => {
 
   const [inCart, setInCart] = useState(false);
   const [adding, setAdding] = useState(false);
-
 
   const isInCart = () => {
     if (!Array.isArray(cart) || !trip) return false;
@@ -162,10 +162,43 @@ const TripCard = ({ trip, user }: TripCardProps) => {
         )}
       </CardContent>
       <CardFooter>
-        <div>
-          Cancellation Policy :{" "}
-          <span className="w-3">{trip?.cancellationPolicy}</span>
-        </div>
+        {trip?.cancellationPolicy &&
+          trip?.cancellationPolicy.length > 0 &&
+          trip?.cancellationPolicy.map((policy, index) => (
+            <div
+              key={index}
+              className="flex flex-wrap gap-4 sm:gap-6 justify-center items-stretch"
+            >
+              <Label className="text-center sm:text-left w-full">
+                Cancellation Policy {index + 1}
+              </Label>
+
+              <div className="flex flex-wrap justify-evenly gap-4 sm:gap-6">
+                {/* Loop through the object entries of the policy */}
+                {Object.entries(policy).map(([days, refund]) => (
+                  <div
+                    key={days}
+                    className="sm:w-1/3 p-4 max-w-full flex-grow flex-shrink"
+                  >
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-evenly">
+                      <div className="flex flex-col sm:w-1/2 gap-4 sm:gap-6 items-center">
+                        <Label className="block font-medium mb-2">
+                          Time {`(>=Days)`}
+                        </Label>
+                        <Input type="number" disabled value={days} />
+                      </div>
+                      <div className="flex flex-col sm:w-1/2 gap-4 sm:gap-6 items-center">
+                        <Label className="block font-medium mb-2">
+                          Refund (%)
+                        </Label>
+                        <Input type="number" disabled value={refund} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
       </CardFooter>
 
       <div className="m-1 flex items-center justify-between px-5 mb-6">
