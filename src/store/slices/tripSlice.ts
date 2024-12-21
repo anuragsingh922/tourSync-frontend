@@ -71,7 +71,7 @@ export const ftechAllTrips = createAsyncThunk("trips/fetchAll", async () => {
 export const postTrip = createAsyncThunk(
   "trips/posttrip",
   async (data: any) => {
-    const response = await api.post<TripState>("/trips", data);
+    const response = await api.post<TripState>("/organizer", data);
     return response.data;
   }
 );
@@ -97,7 +97,7 @@ const tripSlice = createSlice({
       "trips",
       "trips",
       (state, action) => {
-        state.trips.unshift(action.payload as Trip);
+        state.trips = action.payload as any;
         state.status.trips.loading = false;
       }
     );

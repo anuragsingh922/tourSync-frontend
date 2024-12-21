@@ -131,7 +131,7 @@ const organizerTrips = createSlice({
       "organizerTrips",
       "organizerTrips",
       (state, action) => {
-        state.organizerTrips.unshift(action.payload as Trip);
+        state.organizerTrips = action.payload as any;
         state.status.organizerTrips.loading = false;
       }
     );

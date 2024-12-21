@@ -24,9 +24,7 @@ const OrganizerForm = () => {
   const [startingTime, setStartingTime] = useState<Date | null>(null);
   const [endingTime, setEndingTime] = useState<Date | null>(null);
   const [cancellationPolicy, setCancellationPolicy] = useState([]);
-  const [tempDays, settempDays] = useState<number>(null);
-  const [tempRefund, settempRefund] = useState<number>(null);
-  const [slots, setSlots] = useState<Slot[]>([]); // Array of slot objects
+  const [slots, setSlots] = useState<Slot[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -35,10 +33,6 @@ const OrganizerForm = () => {
     end: null,
     seats: 0,
   });
-
-  useEffect(() => {
-    console.log("Policy : ", cancellationPolicy);
-  }, [cancellationPolicy]);
 
   const handleAddSlot = () => {
     if (!newSlot.start || !newSlot.end || newSlot.seats <= 0) {
@@ -50,11 +44,11 @@ const OrganizerForm = () => {
     }
 
     setSlots([...slots, newSlot]);
-    setNewSlot({ start: null, end: null, seats: 0 }); // Reset the form for a new slot
+    setNewSlot({ start: null, end: null, seats: 0 });
   };
 
   const handleDeleteSlot = (index: number) => {
-    setSlots(slots.filter((_, i) => i !== index)); // Remove slot at the specified index
+    setSlots(slots.filter((_, i) => i !== index));
   };
 
   const handleAddTrip = () => {

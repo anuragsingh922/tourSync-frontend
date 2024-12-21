@@ -44,11 +44,11 @@ const ManageTrips = () => {
         </h2>
 
         {user && user?.role === "organizer" && (
-          <Button className="p-2 rounded-md">
-            <Link to="/addtrip" className="flex w-auto items-center">
+          <Link to="/addtrip" className="flex w-auto items-center">
+            <Button className="p-2 rounded-md">
               <Plus className="mr-2 h-4 w-4" /> Add Trip
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         )}
       </div>
 
