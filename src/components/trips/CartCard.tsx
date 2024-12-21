@@ -18,6 +18,15 @@ import { Input } from "../ui/input";
 import Footer from "../layout/Footer";
 import { useState } from "react";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 interface TripCardProps {
   _id: string;
   trip: Trip;
@@ -55,35 +64,57 @@ const formatDateTime = (dateStr: string) => {
   return `${formattedDate} at ${formattedTime}`;
 };
 
-function checkDateDifference(inputDate: string): DiffFormat | string {
-  // Parse the input date string into a Date object
+function canCancel(inputDate: string): {
+  canCancel: boolean;
+  daysLeft: number | string;
+} {
   const input = new Date(inputDate);
-  const now = new Date(); // Current date and time
+  const now = new Date();
 
   if (isNaN(input.getTime())) {
-    return "Invalid date format";
+    return { canCancel: false, daysLeft: "Invalid date format" };
   }
 
-  // Check if the input date is less than the current date
-  if (input < now) {
-    // Calculate the difference in milliseconds
-    const diff = now - input;
+  // Calculate the time difference in milliseconds
+  const diff = input.getTime() - now.getTime();
 
-    // Convert milliseconds to days, hours, and minutes
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  if (diff >= 0) {
+    const totalHoursLeft = diff / (1000 * 60 * 60);
+    const daysLeft = Math.floor(totalHoursLeft / 24);
 
-    return { days, hours, minutes };
+    return {
+      canCancel: totalHoursLeft >= 1,
+      daysLeft,
+    };
   } else {
-    return "The date is not in the past.";
+    return { canCancel: false, daysLeft: "The date is in the past." };
   }
+}
+
+function getAmount(starttimetime: string, tripCost: string): number {
+  const cost = parseInt(tripCost);
+
+  const diff = canCancel(starttimetime).daysLeft;
+
+  if (typeof diff === "string") {
+    return 0;
+  }
+
+  if (diff >= 15) {
+    return cost;
+  }
+  if (diff >= 7) {
+    return cost / 2;
+  }
+
+  return 0;
 }
 
 const CartCard = ({ _id, trip }: TripCardProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const [refundAmount, setrefundAmount] = useState(0);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   if (!trip || typeof trip !== "object") {
     return null;
   }
@@ -137,7 +168,7 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
         </div>
         {location.pathname === "/booked-trips" ? (
           <div className="flex flex-col gap-3">
-            <Button
+            {/* <Button
               className="flex items-center"
               disabled={checkDateDifference(trip?.startingTime)?.days <= 0}
               onClick={() => {
@@ -145,7 +176,56 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
               }}
             >
               <ShoppingBag /> Cancel
-            </Button>
+            </Button> */}
+
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  className="flex items-center"
+                  disabled={!canCancel(trip?.startingTime)?.canCancel}
+                >
+                  <ShoppingBag /> Cancel
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Cancel Trip</DialogTitle>
+                </DialogHeader>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Refund Details</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {isDialogOpen && (
+                      <ul className="flex flex-col gap-3">
+                        <li>
+                          Trip Date : {formatDateTime(trip?.startingTime)}
+                        </li>
+                        <li>
+                          Refundable Amount :{" "}
+                          <span className="font-bold">
+                            {getAmount(trip?.startingTime, trip?.price)}
+                          </span>
+                        </li>
+                        <li className="font-bold">
+                          Note: The refunded amount will be credited back to the
+                          original payment source.
+                        </li>
+                      </ul>
+                    )}
+                  </CardContent>
+                  <CardFooter className="flex items-center justify-end">
+                    <Button
+                      onClick={() => {
+                        dispatch(removeCart(_id));
+                      }}
+                    >
+                      <ShoppingBag /> Cancel
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </DialogContent>
+            </Dialog>
           </div>
         ) : (
           <Button

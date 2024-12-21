@@ -88,30 +88,28 @@ const Cart = () => {
           </CardContent>
         </Card>
 
-        
         {cart && cart.length > 0 && (
           <Card className="flex flex-col items-center justify-center p-3">
             <div className="flex flex-col items-center justify-center gap-2">
-
-            <div className="flex justify-between items-center">
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button>Buy</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Complete Payment</DialogTitle>
-              </DialogHeader>
-              <BuyDetails
-                price={totalCost}
-                onClose={() => setIsDialogOpen(false)}
-                setTotalCost={setTotalCost}
-                cart={cart}
-                paymentloading={paymentloading}
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
+              <div className="flex justify-between items-center">
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button>Buy</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Complete Payment</DialogTitle>
+                    </DialogHeader>
+                    <BuyDetails
+                      price={totalCost}
+                      onClose={() => setIsDialogOpen(false)}
+                      setTotalCost={setTotalCost}
+                      cart={cart}
+                      paymentloading={paymentloading}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </div>
               <div className="flex items-center justify-center">
                 <img
                   src={VisaImage}

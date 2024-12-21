@@ -113,7 +113,6 @@ const EditTrip = () => {
       startingTime,
       endingTime,
       slots,
-      cancellationPolicy,
       tripID,
     };
 
@@ -261,102 +260,6 @@ const EditTrip = () => {
           ))}
         </div>
       )}
-
-      {cancellationPolicy && cancellationPolicy.length < 3 && (
-        <>
-          <div>
-            <label className="block font-medium mb-2">
-              Add Cancellation Policy{" "}
-              <span className="mx-4">{3 - cancellationPolicy.length} left</span>
-            </label>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <div className="flex gap-2 items-center">
-                <Label className="block font-medium mb-2">{`Time (>=Days)`}</Label>
-                <Input
-                  type="number"
-                  value={tempDays}
-                  onChange={(e) => {
-                    settempDays(parseInt(e.target.value));
-                  }}
-                />
-              </div>
-              <div className="flex gap-2 items-center">
-                <Label className="block font-medium mb-2">Refund (%)</Label>
-                <Input
-                  type="number"
-                  value={tempRefund}
-                  onChange={(e) => {
-                    settempRefund(parseInt(e.target.value));
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <Button
-            onClick={() => {
-              const newPloicy = new Map<number, number>();
-
-              newPloicy.set(tempDays, tempRefund);
-              settempDays(0);
-              settempRefund(0);
-              setCancellationPolicy((prev) => [...prev, newPloicy]);
-            }}
-          >
-            Add Policy
-          </Button>
-        </>
-      )}
-
-      <label className="block font-medium mb-2">Cancellation Policy</label>
-
-      {cancellationPolicy &&
-        cancellationPolicy.length > 0 &&
-        cancellationPolicy.map((policy, index) => (
-          <div
-            key={index}
-            className="flex flex-col sm:flex-row gap-4 sm:gap-10 items-center w-full"
-          >
-            <Label className="text-center sm:text-left">
-              Cancellation Policy {index + 1}
-            </Label>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-              {/* Loop through the object entries of the policy */}
-              {Object.entries(policy).map(([days, refund]) => (
-                <div key={days}>
-                  <div className="flex gap-2 items-center">
-                    <div>
-                      <Label className="block font-medium mb-2">
-                        Time {`(>=Days)`}
-                      </Label>
-                      <Input type="number" disabled value={days} />
-                    </div>
-                    <div>
-                      <Label className="block font-medium mb-2">
-                        Refund (%)
-                      </Label>
-                      <Input type="number" disabled value={refund} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Delete button */}
-            <button
-              onClick={() =>
-                setCancellationPolicy((prev) =>
-                  prev.filter((_, i) => i !== index)
-                )
-              }
-              className="bg-red-500 text-white p-2 rounded mt-4 sm:mt-0"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
 
       <Button onClick={handleAddTrip} className="w-full">
         Update Trip

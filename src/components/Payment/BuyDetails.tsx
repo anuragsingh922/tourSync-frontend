@@ -11,6 +11,7 @@ import UPIImage from "@/components/images/upi.png";
 import CreditCardImage from "@/components/images/creditCard.png";
 import DebitCardImage from "@/components/images/debitCard.png";
 import GooglePayImage from "@/components/images/googlePay.png";
+import { useNavigate } from "react-router-dom";
 
 const paymentOptions = [
   { name: "Google Pay", src: GooglePayImage },
@@ -27,6 +28,7 @@ const BuyDetails = ({
   paymentloading,
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [selectedPaymentIndex, setselectedPaymentIndex] = useState(null);
   return (
     <>
@@ -100,6 +102,12 @@ const BuyDetails = ({
                     .then((payload) => {
                       dispatch(clearCart());
                       setTotalCost(0);
+                      toast(({
+                        title : "Trip Booked",
+                        description : "Trip Booked successfully.",
+                        variant : "default"
+                      }))
+                      navigate("/booked-trips")
                     });
                 } else {
                   toast({

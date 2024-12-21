@@ -81,7 +81,6 @@ const OrganizerForm = () => {
       startingTime,
       endingTime,
       slots,
-      cancellationPolicy,
     };
 
     dispatch(postTrip(tripObj));
@@ -241,6 +240,10 @@ const OrganizerForm = () => {
           ))}
         </div>
       )}
+
+      <Button onClick={handleAddTrip} className="w-full">
+        Add Trip
+      </Button>
     </div>
   );
 };
