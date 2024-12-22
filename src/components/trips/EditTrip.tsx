@@ -10,6 +10,10 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { updateTrip } from "@/store/slices/organizerTripsSlice";
+import { SlotsSection } from "../OrganizerForm/SlotsSection";
+import { AccommodationSection } from "../OrganizerForm/AccommodationSection";
+import { DiningSection } from "../OrganizerForm/DiningSection";
+import { ImageGallerySection } from "../OrganizerForm/ImageGallerySection";
 
 interface Slot {
   start: Date | null;
@@ -25,9 +29,28 @@ const EditTrip = () => {
   const [description, setDescription] = useState("");
   const [startingTime, setStartingTime] = useState<Date | null>(null);
   const [endingTime, setEndingTime] = useState<Date | null>(null);
-  const [cancellationPolicy, setCancellationPolicy] = useState<string>("");
-  const [tempDays, settempDays] = useState<number>(null);
-  const [tempRefund, settempRefund] = useState<number>(null);
+  const [location, setLocation] = useState("");
+  const [groupSize, setGroupSize] = useState("");
+  const [tripImage, settripImage] = useState("");
+  const [duration, setDuration] = useState("");
+
+  // Accommodations
+  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+
+  // Dining experiences
+  const [diningExperiences, setDiningExperiences] = useState<
+    DiningExperience[]
+  >([]);
+
+  // Gallery categories
+  const [galleryCategories, setGalleryCategories] = useState<GalleryCategory[]>(
+    [
+      { title: "Accommodation", images: [] },
+      { title: "Dining", images: [] },
+      { title: "Transportation", images: [] },
+      { title: "Activities", images: [] },
+    ]
+  );
   const [slots, setSlots] = useState<Slot[]>([]); // Array of slot objects
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -52,8 +75,13 @@ const EditTrip = () => {
       setDescription(trip.description || "");
       setStartingTime(trip.startingTime ? new Date(trip.startingTime) : null);
       setEndingTime(trip.endingTime ? new Date(trip.endingTime) : null);
-      setCancellationPolicy(trip.cancellationPolicy || "");
       setSlots(trip.slots || []);
+      settripImage(trip?.tripImage);
+      setLocation(trip?.location);
+      setGroupSize(trip?.groupSize);
+      setDuration(trip?.duration);
+      setGalleryCategories(trip?.galleryCategories);
+      setAccommodations(trip?.accommodations);
     } else {
       toast({
         description: "Trip not found.",
@@ -111,8 +139,14 @@ const EditTrip = () => {
       price,
       startingTime,
       endingTime,
+      tripImage,
       slots,
+      location,
+      duration,
+      groupSize,
       tripID,
+      accommodations,
+      galleryCategories,
     };
 
     dispatch(updateTrip(tripObj));
@@ -139,6 +173,11 @@ const EditTrip = () => {
         value={tripName}
         placeholder="Trip Name"
         onChange={(e) => setTripName(e.target.value)}
+      />
+      <Input
+        value={tripImage}
+        placeholder="Trip Image"
+        onChange={(e) => settripImage(e.target.value)}
       />
       <Textarea
         placeholder="Trip Description"
@@ -172,93 +211,30 @@ const EditTrip = () => {
           />
         </div>
       </div>
-
-      {/* Slot Addition Form */}
-      {startingTime && endingTime && (
-        <div className="mt-4">
-          <label className="block font-medium mb-2">Add Slots</label>
-          <div className="grid grid-cols-2 gap-4 ">
-            <div>
-              <label className="text-sm">
-                Start Time <span className="w-20"></span>
-              </label>
-              <DatePicker
-                selected={newSlot.start}
-                onChange={(date) => setNewSlot({ ...newSlot, start: date! })}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="Slot start time"
-                minDate={startingTime}
-                maxDate={endingTime}
-              />
-            </div>
-
-            <div>
-              <label className="text-sm">End Time</label>
-              <DatePicker
-                selected={newSlot.end}
-                onChange={(date) => setNewSlot({ ...newSlot, end: date! })}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="Slot end time"
-                minDate={startingTime}
-                maxDate={endingTime}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm">Seats</label>
-            <Input
-              type="number"
-              value={newSlot.seats || ""}
-              placeholder="Seats"
-              onChange={(e) =>
-                setNewSlot({ ...newSlot, seats: Number(e.target.value) })
-              }
-            />
-          </div>
-
-          {/* Add Slot Button */}
-          <Button
-            variant="outline"
-            onClick={handleAddSlot}
-            className="mt-4 flex items-center gap-2"
-          >
-            <Plus size={16} />
-            Add Slot
-          </Button>
-        </div>
-      )}
-
       {/* Display Added Slots */}
-      {slots.length > 0 && (
-        <div className="mt-4">
-          <label className="block font-medium mb-2">Added Slots</label>
-          {slots.map((slot, index) => (
-            <div key={index} className="flex items-center gap-4 mb-2">
-              <div className="flex flex-col">
-                <span className="text-sm">
-                  Start Time: {slot.start?.toLocaleString()}
-                </span>
-                <span className="text-sm">
-                  End Time: {slot.end?.toLocaleString()}
-                </span>
-                <span className="text-sm">Seats: {slot.seats}</span>
-              </div>
-
-              {/* Delete Button */}
-              <Button
-                variant="ghost"
-                onClick={() => handleDeleteSlot(index)}
-                className="p-2 text-sm"
-              >
-                <Trash size={16} />
-              </Button>
-            </div>
-          ))}
-        </div>
+      {startingTime && endingTime && (
+        <SlotsSection
+          slots={slots}
+          setSlots={setSlots}
+          startingTime={startingTime}
+          endingTime={endingTime}
+        />
       )}
+
+      <AccommodationSection
+        accommodations={accommodations}
+        setAccommodations={setAccommodations}
+      />
+
+      {/* <DiningSection
+        diningExperiences={diningExperiences}
+        setDiningExperiences={setDiningExperiences}
+      /> */}
+
+      <ImageGallerySection
+        categories={galleryCategories}
+        setCategories={setGalleryCategories}
+      />
 
       <Button onClick={handleAddTrip} className="w-full">
         Update Trip

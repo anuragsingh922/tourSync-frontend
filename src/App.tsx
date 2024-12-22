@@ -14,7 +14,7 @@ import TripFetcher from "./components/trips/TripFetcher";
 const Authorized = React.lazy(() => import("./hooks/Authorized"));
 const Cart = React.lazy(() => import("./pages/Cart"));
 const OrganizerForm = React.lazy(
-  () => import("./components/trips/NewTripForm")
+  () => import("./components/trips/OrganizerForm")
 );
 const ManageTrips = React.lazy(() => import("./pages/ManageTrips"));
 const EditTrip = React.lazy(() => import("./components/trips/EditTrip"));
@@ -56,7 +56,7 @@ const App: React.FC = () => {
                   <Route path="/auth" element={<Auth />} />
                   <Route
                     // path="/trip/:tripID"
-                    path="/tripDetail"
+                    path="/trip/:tripID"
                     element={withAuthorization(TripDetails)({})}
                   />
                   <Route path="/trips" element={withAuthorization(Trips)({})} />

@@ -5,6 +5,7 @@ import cartReducer from "./slices/cartSlice";
 import organizerTripsReducer from "./slices/organizerTripsSlice";
 import bookedTripsReducer from "./slices/bookedtripsSlice";
 import paymentsReducer from "./slices/paymentSlice";
+import tripDetailsReducer from "./slices/tripDetailsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     organizerTrips: organizerTripsReducer,
     bookedTrips: bookedTripsReducer,
     payments: paymentsReducer,
+    tripDetails: tripDetailsReducer,
   },
 });
 
