@@ -14,6 +14,8 @@ import { SlotsSection } from "../OrganizerForm/SlotsSection";
 import { AccommodationSection } from "../OrganizerForm/AccommodationSection";
 import { DiningSection } from "../OrganizerForm/DiningSection";
 import { ImageGallerySection } from "../OrganizerForm/ImageGallerySection";
+import { BasicTripInfo } from "../OrganizerForm/BasicTripInfo";
+import { Label } from "../ui/label";
 
 interface Slot {
   start: Date | null;
@@ -189,6 +191,32 @@ const EditTrip = () => {
         placeholder="Price"
         onChange={(e) => setPrice(e.target.value)}
       />
+      <div className="space-y-4">
+        <div>
+          <Label>Location</Label>
+          <Input
+            value={location}
+            placeholder="e.g., Zermatt, Switzerland"
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </div>
+        <div>
+          <Label>Group Size</Label>
+          <Input
+            value={groupSize}
+            placeholder="e.g., 2-8 People"
+            onChange={(e) => setGroupSize(e.target.value)}
+          />
+        </div>
+        <div>
+          <Label>Duration</Label>
+          <Input
+            value={duration}
+            placeholder="e.g., 7 Days"
+            onChange={(e) => setDuration(e.target.value)}
+          />
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4 pl-14">
         <div>
           <label className="block font-medium mb-2">Starting Time</label>

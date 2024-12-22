@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { removebookedTrip } from "@/store/slices/bookedtripsSlice";
 import { removeCart } from "@/store/slices/cartSlice";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import Footer from "../layout/Footer";
@@ -122,43 +122,45 @@ const CartCard = ({ _id, trip, setTotalCost }) => {
   return (
     <Card key={_id} className="m-2">
       <img
-        src="https://images.unsplash.com/photo-1697518585322-a3e349924e52?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src={
+          trip.tripImage ||
+          "https://images.unsplash.com/photo-1697518585322-a3e349924e52?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        }
         alt=""
         style={{ width: "100%", height: "400px", objectFit: "cover" }}
       />
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between items-start mb-4">
-            {/* <Link
+            <Link
               to={`/trip/${trip?.tripID}`}
               className="text-xl font-semibold hover:text-primary hover:underline cursor-pointer"
             >
-            </Link> */}
-            {trip?.tripName}
+              {trip?.tripName}
+            </Link>
           </div>
         </CardTitle>
         <CardDescription>{trip?.description}</CardDescription>
       </CardHeader>
 
       <CardContent>
-        {trip?.slots.length > 0 && (
+        {/* {trip?.slots.length > 0 && (
           <div className="mt-4">
             <label className="block font-medium mb-2">Added Slots</label>
-            {trip?.slots.map((slot, index) => (
-              <div key={index} className="flex items-center gap-4 mb-2">
-                <div className="flex flex-col">
-                  <span className="text-sm">
-                    Start Time: {formatDateTime(slot?.start)}
-                  </span>
-                  <span className="text-sm">
-                    End Time: {formatDateTime(slot?.end)}
-                  </span>
-                  <span className="text-sm">Seats: {slot?.seats}</span>
-                </div>
-              </div>
-            ))}
+            {trip?.slots.map((slot, index) => ( */}
+        <div className="flex items-center gap-4 mb-2">
+          <div className="flex flex-col">
+            <span className="text-sm">
+              Start Time: {formatDateTime(trip?.startingTime)}
+            </span>
+            <span className="text-sm">
+              End Time: {formatDateTime(trip?.endingTime)}
+            </span>
           </div>
-        )}
+        </div>
+        {/* ))}
+          </div>
+        )} */}
       </CardContent>
 
       <div className="m-1 flex items-center justify-between px-5 mb-6">

@@ -57,7 +57,7 @@ const App: React.FC = () => {
                   <Route
                     // path="/trip/:tripID"
                     path="/trip/:tripID"
-                    element={withAuthorization(TripDetails)({})}
+                    element={<TripDetails/>}
                   />
                   <Route path="/trips" element={withAuthorization(Trips)({})} />
                   <Route
