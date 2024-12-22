@@ -121,14 +121,19 @@ const CartCard = ({ _id, trip, setTotalCost }) => {
 
   return (
     <Card key={_id} className="m-2">
-      <img
-        src={
-          trip.tripImage ||
-          "https://images.unsplash.com/photo-1697518585322-a3e349924e52?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        }
-        alt=""
-        style={{ width: "100%", height: "400px", objectFit: "cover" }}
-      />
+      <Link
+        to={`/trip/${trip?.tripID}`}
+        className="text-xl font-semibold hover:text-primary hover:underline cursor-pointer"
+      >
+        <img
+          src={
+            trip.tripImage ||
+            "https://images.unsplash.com/photo-1697518585322-a3e349924e52?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+          alt=""
+          style={{ width: "100%", height: "400px", objectFit: "cover" }}
+        />
+      </Link>
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between items-start mb-4">
@@ -138,6 +143,9 @@ const CartCard = ({ _id, trip, setTotalCost }) => {
             >
               {trip?.tripName}
             </Link>
+            <Button>
+              <Link to={`/trip/${trip?.tripID}`}>Details</Link>
+            </Button>
           </div>
         </CardTitle>
         <CardDescription>{trip?.description}</CardDescription>

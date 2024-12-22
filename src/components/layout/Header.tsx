@@ -46,7 +46,7 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-6">
-            {user?.role === "user" ? (
+            {user && user?.role === "user" && (
               <>
                 <Link
                   to="/cart"
@@ -61,7 +61,9 @@ const Header = () => {
                   Booked Trips
                 </Link>
               </>
-            ) : (
+            )}
+
+            {user && user?.role === "organizer" && (
               <Link
                 to="/manage-trips"
                 className="text-sm font-medium hover:text-primary transition-colors"
@@ -143,15 +145,17 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden border-t p-4 space-y-4 animate-in">
           <nav className="flex flex-col space-y-4">
-            <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <Link
-                to="/profile"
-                className="text-sm font-medium hover:text-primary transition-colors"
-              >
-                Profile
-              </Link>
-            </div>
-            {user?.role === "user" ? (
+            {user && (
+              <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Link
+                  to="/profile"
+                  className="text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Profile
+                </Link>
+              </div>
+            )}
+            {user && user?.role === "user" && (
               <>
                 <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   <Link
@@ -170,7 +174,9 @@ const Header = () => {
                   </Link>
                 </div>
               </>
-            ) : (
+            )}
+
+            {user && user?.role === "organizer" && (
               <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <Link
                   to="/manage-trips"
