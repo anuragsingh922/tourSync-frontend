@@ -78,7 +78,6 @@ const BuyDetails = ({
       <div className="flex items-center justify-center">
         <Button
           onClick={() => {
-            console.log("Option : " , selectedPaymentIndex);
             if (!selectedPaymentIndex) {
               toast({
                 title: "",

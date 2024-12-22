@@ -3,11 +3,11 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useToast } from "@/hooks/use-toast";
 import { verify } from "@/store/slices/userSlice";
-import { ftechAllTrips } from "@/store/slices/tripSlice";
 import { fetchAllItemsCart } from "@/store/slices/cartSlice";
 import { fetchAllItemsbooked } from "@/store/slices/bookedtripsSlice";
+import { ftechAllTrips } from "@/store/slices/tripSlice";
 
-const useFetchQuestions = () => {
+const useFetchTripss = () => {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
@@ -18,12 +18,7 @@ const useFetchQuestions = () => {
     },
   } = useAppSelector((state) => state.trips);
 
-  const {
-    user,
-    status: {
-      user: { loading: userloading, error: userError },
-    },
-  } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (!user) {
@@ -31,7 +26,6 @@ const useFetchQuestions = () => {
     }
   }, [user, dispatch]);
 
-  // Fetch trending and recent questions
   useEffect(() => {
     dispatch(ftechAllTrips());
   }, [dispatch]);
@@ -55,4 +49,4 @@ const useFetchQuestions = () => {
   }, [tripError, toast]);
 };
 
-export default useFetchQuestions;
+export default useFetchTripss;

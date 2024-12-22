@@ -10,7 +10,6 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { updateTrip } from "@/store/slices/organizerTripsSlice";
-import { Label } from "../ui/label";
 
 interface Slot {
   start: Date | null;
@@ -120,7 +119,7 @@ const EditTrip = () => {
 
     toast({
       title: "Trip Added",
-      description: "Your trip has been successfully added.",
+      description: "Your trip has been successfully modified.",
     });
 
     // Reset the form

@@ -45,16 +45,7 @@ const Header = () => {
             <span className="font-bold text-xl">TourSync</span>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            {/* <div className="relative w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                type="search"
-                placeholder="Search questions..."
-                className="pl-10 w-full"
-              />
-            </div> */}
             {user?.role === "user" ? (
               <>
                 <Link
@@ -114,10 +105,9 @@ const Header = () => {
                       <div
                         className="cursor-pointer"
                         onClick={() => {
-                          document.cookie =
-                            "asktoken=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                           dispatch(logout());
-                          handlesignout();
+                          navigate("/");
+                          // handlesignout();
                         }}
                       >
                         Sign Out
@@ -152,14 +142,6 @@ const Header = () => {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden border-t p-4 space-y-4 animate-in">
-          {/* <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              type="search"
-              placeholder="Search questions..."
-              className="pl-10 w-full"
-            />
-          </div> */}
           <nav className="flex flex-col space-y-4">
             <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
               <Link
@@ -203,11 +185,10 @@ const Header = () => {
                 <div
                   className="cursor-pointer"
                   onClick={() => {
-                    document.cookie =
-                      "asktoken=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     setIsMenuOpen(!isMenuOpen);
                     dispatch(logout());
-                    handlesignout();
+                    navigate("/");
+                    // handlesignout();
                   }}
                 >
                   Sign Out

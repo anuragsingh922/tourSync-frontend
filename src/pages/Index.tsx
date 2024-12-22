@@ -27,6 +27,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import CancellationPolicy from "@/components/Payment/CancellationPolicy";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { ftechAllTrips } from "@/store/slices/tripSlice";
+import { fetchOrganizerAllTrips } from "@/store/slices/organizerTripsSlice";
 
 const priceComparisonData = [
   { name: "Our Platform", price: 1000, fill: "hsl(var(--primary))" },
@@ -58,7 +62,13 @@ const benefitsList = [
 ];
 
 const Index = () => {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!user) return;
+    dispatch(ftechAllTrips());
+  }, [dispatch, user]);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -91,27 +101,6 @@ const Index = () => {
             </Button>
           )}
         </div>
-      </section>
-
-      {/* Trending Questions Section */}
-      <section className="px-4 mb-12">
-        {/* {user && user?.role === "organizer" ? (
-        )
-         : (
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <MountainSnowIcon className="h-6 w-6 text-primary" />
-            Trips
-          </h2>
-        )} */}
-        {/* {loadingTrips ? (
-          <div className="text-center py-8">Loading Trips...</div>
-        ) : (
-          <div className="space-y-4">
-            {trips.slice(0, 3).map((trip) => (
-              <QuestionCard key={trip._id} trip={trip} />
-            ))}
-          </div>
-        )} */}
       </section>
 
       {/* Features Section */}
@@ -179,24 +168,24 @@ const Index = () => {
       </section>
 
       {/* Available Trips Section */}
-      {user?.role === "user" && (
-        <section className="py-20 px-4 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 inline-block">
-                Available Trips
-              </span>
-              <h2 className="text-4xl font-bold mb-4">
-                Explore Our Destinations
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Find your perfect trip from our carefully curated selection
-              </p>
-            </div>
-            <Trips />
+      {/* {user?.role === "user" && ( */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 inline-block">
+              Available Trips
+            </span>
+            <h2 className="text-4xl font-bold mb-4">
+              Explore Our Destinations
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Find your perfect trip from our carefully curated selection
+            </p>
           </div>
-        </section>
-      )}
+          <Trips />
+        </div>
+      </section>
+      {/* )} */}
 
       <section>
         <CancellationPolicy />

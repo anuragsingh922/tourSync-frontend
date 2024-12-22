@@ -16,13 +16,13 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { signIn, signUp } from "@/store/slices/userSlice";
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [role, setrole] = useState("user");
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const {
     user,
     status: {
@@ -50,6 +50,7 @@ const Auth = () => {
         setName("");
         setEmail("");
         setPassword("");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Sign-up failed", error);

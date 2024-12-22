@@ -57,7 +57,6 @@ const Cart = () => {
 
   return (
     <div className="container max-w-4xl mx-auto py-8 space-y-8">
-      {/* Top Questions Section */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
@@ -70,7 +69,7 @@ const Cart = () => {
           {cart &&
             cart.length > 0 &&
             cart.map((trip, index) => (
-              <CartCard key={trip?._id} _id={trip?._id} trip={trip?.tripID} />
+              <CartCard key={trip?._id} _id={trip?._id} trip={trip?.tripID} setTotalCost={setTotalCost} />
             ))}
         </CardContent>
       </Card>

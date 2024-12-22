@@ -1,9 +1,9 @@
-import useFetchQuestions from "@/hooks/useFetchTrips";
+import useFetchTrips from "@/hooks/useFetchTrips";
 
-const QuestionsFetcher = () => {
-  useFetchQuestions();
+const TripsFetcher = () => {
+  useFetchTrips();
 
   return null;
 };
 
-export default QuestionsFetcher;
+export default TripsFetcher;

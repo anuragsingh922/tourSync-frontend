@@ -110,7 +110,7 @@ function getAmount(starttimetime: string, tripCost: string): number {
   return 0;
 }
 
-const CartCard = ({ _id, trip }: TripCardProps) => {
+const CartCard = ({ _id, trip, setTotalCost }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const [refundAmount, setrefundAmount] = useState(0);
@@ -217,7 +217,7 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
                   <CardFooter className="flex items-center justify-end">
                     <Button
                       onClick={() => {
-                        dispatch(removeCart(_id));
+                        dispatch(removebookedTrip(_id));
                       }}
                     >
                       <ShoppingBag /> Cancel
@@ -231,6 +231,7 @@ const CartCard = ({ _id, trip }: TripCardProps) => {
           <Button
             className="flex items-center"
             onClick={() => {
+              setTotalCost((prev) => prev - trip?.price);
               dispatch(removeCart(_id));
             }}
           >

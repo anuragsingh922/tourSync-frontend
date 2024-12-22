@@ -19,7 +19,6 @@ const Trips = () => {
     return <div>Loading..</div>;
   }
 
-  // Ensure questions is an array
   const validTrips =
     Array.isArray(trips) && trips && trips.length > 0 ? trips : [];
 
@@ -34,7 +33,7 @@ const Trips = () => {
 
       {validTrips.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">
-          No questions found. Be the first to ask one!
+          No Trip found.
         </div>
       )}
 

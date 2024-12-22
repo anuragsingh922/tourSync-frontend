@@ -12,10 +12,8 @@ const BookedTrips = () => {
     },
   } = useAppSelector((state) => state.bookedTrips);
 
-
   return (
     <div className="container max-w-4xl mx-auto py-8 space-y-8">
-      {/* Top Questions Section */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
@@ -31,11 +29,16 @@ const BookedTrips = () => {
                 return <Skeleton />;
               }
               return (
-                <CartCard key={trip?._id} _id={trip?._id} trip={trip} />
+                <CartCard
+                  key={trip?._id}
+                  _id={trip?._id}
+                  trip={trip}
+                  setTotalCost={() => {}}
+                />
               );
             })}
 
-            {bookedTrips.length===0 && <div>You haven't booked any trip.</div>}
+          {bookedTrips.length === 0 && <div>You haven't booked any trip.</div>}
         </CardContent>
       </Card>
     </div>
