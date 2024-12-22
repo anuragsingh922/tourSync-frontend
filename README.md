@@ -121,3 +121,12 @@ If you'd like to contribute to **TourSync Frontend**, follow these steps:
 3. Make your changes and commit them (`git commit -am 'Add a feature'`).
 4. Push your branch to your forked repository (`git push origin feature/your-feature`).
 5. Open a pull request in the original repository.
+
+
+### My Details :
+
+- Name : Anurag
+- College : IIIT Sonepat
+- College ID : 12111064
+- Mail : anuragjadu922@gmail.com
+- Contact Number : +91 9896424841
