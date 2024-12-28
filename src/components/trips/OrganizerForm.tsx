@@ -76,22 +76,6 @@ const OrganizerForm = () => {
   );
 
   const handleAddTrip = () => {
-    // console.log({
-    //   tripName,
-    //   description,
-    //   tripImage,
-    //   price,
-    //   startingTime,
-    //   endingTime,
-    //   location,
-    //   groupSize,
-    //   bestTime,
-    //   duration,
-    //   slots,
-    //   accommodations,
-    //   diningExperiences,
-    //   galleryCategories,
-    // });
     if (
       !tripName.trim() ||
       !description.trim() ||

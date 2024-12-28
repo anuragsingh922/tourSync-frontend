@@ -107,6 +107,8 @@ export const verify = createAsyncThunk<AuthResponse>(
 export const logout = createAsyncThunk<AuthResponse>(
   "/auth/logout",
   async () => {
+    localStorage.removeItem("tour-sync-auth");
+    return;
     const response = await api.get<AuthResponse>("/auth/logout");
     return response.data;
   }

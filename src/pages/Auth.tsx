@@ -33,7 +33,10 @@ const Auth = () => {
   const handleSignIn = () => {
     dispatch(signIn({ email, password }))
       .unwrap()
-      .then(() => {
+      .then((data : any) => {
+        if (data?.token) {
+          localStorage.setItem("tour-sync-auth", data?.token);
+        }
         navigate("/");
       })
       .catch((error) => {

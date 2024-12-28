@@ -18,8 +18,14 @@ export const ImageGallerySection = ({
   setCategories,
 }: ImageGallerySectionProps) => {
   const handleAddImage = (categoryIndex: number) => {
-    const newCategories = [...categories];
-    newCategories[categoryIndex].images.push({ url: "", alt: "" });
+    const newCategories = categories.map((category, index) =>
+      index === categoryIndex
+        ? {
+            ...category,
+            images: [...category.images, { url: "", alt: "" }],
+          }
+        : category
+    );
     setCategories(newCategories);
   };
 
@@ -48,8 +54,22 @@ export const ImageGallerySection = ({
     field: "url" | "alt",
     value: string
   ) => {
-    const newCategories = [...categories];
-    newCategories[categoryIndex].images[imageIndex][field] = value;
+    const newCategories = categories.map((category, index) =>
+      index === categoryIndex
+        ? {
+            ...category,
+            images: category.images.map((image, i) =>
+              i === imageIndex
+                ? {
+                    ...image,
+                    [field]: value,
+                  }
+                : image
+            ),
+          }
+        : category
+    );
+  
     setCategories(newCategories);
   };
 

@@ -45,6 +45,17 @@ Follow the steps below to get the **TourSync Frontend** up and running locally:
 
 ---
 
+
+## Dummy accounts for testing
+
+- User : 
+-- email : `anurag@gmail.com`
+-- pass : `12345678`
+
+- Organizer : 
+-- email : `anurago@gmail.com`
+-- pass : `12345678`
+
 ## **Features**
 
 ### **Organizer Features**

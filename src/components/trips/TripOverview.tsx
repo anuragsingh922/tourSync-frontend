@@ -8,8 +8,6 @@ export const TripOverview = ({ description, location, duration }) => {
     { icon: MapPin, label: "Location", value: location },
     { icon: MapPin, description: "Description", value: description },
   ];
-
-  console.log("Details : ", details);
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}

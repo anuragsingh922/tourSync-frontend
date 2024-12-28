@@ -136,13 +136,9 @@ const TripCard = ({ trip, user }: TripCardProps) => {
             >
               {trip.tripName}
             </Link>
-            <Button>
-              <Link
-                to={`/trip/${trip?.tripID}`}
-              >
-                Details
-              </Link>
-            </Button>
+            <Link to={`/trip/${trip?.tripID}`}>
+              <Button>Details</Button>
+            </Link>
           </div>
         </CardTitle>
         <CardDescription>{trip?.description}</CardDescription>

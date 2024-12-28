@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { logout } from "@/store/slices/userSlice";
+import { logOut, logout } from "@/store/slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -108,6 +108,7 @@ const Header = () => {
                         className="cursor-pointer"
                         onClick={() => {
                           dispatch(logout());
+                          dispatch(logOut());
                           navigate("/");
                           // handlesignout();
                         }}
@@ -193,6 +194,7 @@ const Header = () => {
                   onClick={() => {
                     setIsMenuOpen(!isMenuOpen);
                     dispatch(logout());
+                    dispatch(logOut());
                     navigate("/");
                     // handlesignout();
                   }}

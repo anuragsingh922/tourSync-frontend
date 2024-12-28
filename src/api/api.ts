@@ -14,9 +14,22 @@ const axiosInstance: AxiosInstance = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization' : localStorage.getItem("asktoken")
   },
 });
+
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("tour-sync-auth");
+    if (token) {
+      config.headers['Authorization'] = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const api = {
   get: async <T>(endpoint: string): Promise<ApiResponse<T>> => {

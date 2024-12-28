@@ -20,6 +20,8 @@ const useFetchTripss = () => {
 
   const { user } = useAppSelector((state) => state.user);
 
+  const token = localStorage?.getItem("tour-sync-auth");
+
   useEffect(() => {
     if (!user) {
       dispatch(verify());
@@ -31,13 +33,12 @@ const useFetchTripss = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       dispatch(fetchAllItemsCart());
       dispatch(fetchAllItemsbooked());
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, token]);
 
-  // Handle errors with toasts
   useEffect(() => {
     if (tripError) {
       toast({

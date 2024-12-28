@@ -26,8 +26,6 @@ const TripDetails = () => {
     },
   } = useAppSelector((state) => state.tripDetails);
 
-  console.log("Details : ", tripDetails, tripID);
-
   useEffect(() => {
     if (tripID) {
       dispatch(fetchTripDetails(tripID));
